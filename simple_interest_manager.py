@@ -1,67 +1,70 @@
 import pandas as pd
-import numpy as np
+import streamlit as st
 
+"""
+# Investment calculator
 
-def total_interest_calculator(periods, interest_rate):
+Hello! This is a very simple investment calculator. 
+I developed this app as a way to practice my software skills (from back-end to front-end).
+Here you can perform simple simulations of a single investment through a limited number of periods, 
+which will be increased by a fixed interest rate and taxes will be paid over the rend recieved. 
+Try it out!
+"""
+init_amount = st.number_input(
+    "Insert here the initial investment amount",
+    min_value=0.00,
+    step=0.01,
+    help="Only positive values allowed",
+)
+periods = st.number_input(
+    "Insert here the number of periods you intend to mantain your investment",
+    min_value=0,
+    step=1,
+    help="Only positive values allowed",
+)
+interest_rate = st.number_input(
+    "Insert here the interest rate (%) expected from your investment. This rate will be applied to your initial amount for each period of investment",
+    min_value=0.0,
+    step=0.1,
+    help="Only positive values. Only numbers. If your expected interest rate is 10%, enter the number 10",
+)
+tax_rate = st.number_input(
+    "Insert here the tax rate expected to be collected from your investment's revenue",
+    min_value=0.0,
+    step=0.1,
+    help="Only positive values allowed. Only numbers. If the expected tax rate is 20%, enter 20",
+)
 
-    total_interest = (1 + interest_rate) ** periods
+total_interest = (1 + (interest_rate / 100)) ** periods
 
-    return total_interest
+final_amount = init_amount * total_interest
 
+net_before_taxes = final_amount - init_amount
 
-def final_amount_calculator(total_interest, init_amount):
+total_taxes = net_before_taxes * (tax_rate / 100)
 
-    final_amount = init_amount * total_interest
+net_after_taxes = net_before_taxes - total_taxes
 
-    return final_amount
+"""
+# Results:
+"""
 
+"""
+## At the end, your final amount will be:
+"""
+final_amount
 
-def net_income_calculator(final_amount, init_amount, tax_rate):
+""" 
+## Which means that your total gain (final - initial) is:
+"""
+net_before_taxes
 
-    net_before_taxes = final_amount - init_amount
+"""
+## Then, you will have to pay the value below in the form of taxes
+"""
+total_taxes
 
-    total_taxes = net_before_taxes * tax_rate
-
-    net_after_taxes = net_before_taxes - total_taxes
-
-    result = {
-        "net_before_taxes": net_before_taxes,
-        "net_after_taxes": net_after_taxes,
-        "total_taxes": total_taxes,
-    }
-
-    return result
-
-
-if __name__ == "__main__":
-    init_amount = 2000
-
-    periods = 12
-
-    interest_rate = 0.01
-
-    tax_rate = 0.225
-
-    total_interest = total_interest_calculator(
-        periods=periods, interest_rate=interest_rate
-    )
-
-    print(
-        f"The final interest rate during the whole period is: {(total_interest-1)*100}%"
-    )
-
-    final_amount = final_amount_calculator(
-        total_interest=total_interest, init_amount=init_amount
-    )
-
-    print(f"The final calculated amount of the investment is: {final_amount}")
-
-    result = net_income_calculator(
-        final_amount=final_amount, init_amount=init_amount, tax_rate=tax_rate
-    )
-
-    print(f"The profit of the investment before taxes is: {result['net_before_taxes']}")
-
-    print(f"The profit of the investment after taxes is: {result['net_after_taxes']}")
-
-    print(f"The total taxes paid to the government will be: {result['total_taxes']}")
+"""
+## Which means that you will have a total net amount after taxes of:
+"""
+net_after_taxes
