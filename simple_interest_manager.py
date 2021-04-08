@@ -25,9 +25,10 @@ language_dictionary = {
     'interest_rate_body':""" ## Insert here the monthly interest rate (%) expected from your investment.""",
     'interest_rate_help':"Only positive values. Only numbers. If your expected interest rate is 10%, enter the number 10",
     'interest_rate_answ':'Interest rate inserted: ',
-    'tax_rate_body':""" ## The tax rate is defined here accordingly to the number of periods the investment will be held.""",
-    'tax_rate_help':"Until 6 months, 22.5%; From 7 to 12 months, 20%; From 13 to 24 months, 17.5%; Beyond 24 months, 15%",
-    'tax_rate_answ':"Tax rate: ",
+    'tax_rate_body':""" ### The tax rate is defined here accordingly to the number of periods the investment will be held.""",
+    'tax_rate_help_title': "To better understand the tax rate, click here",
+    'tax_rate_help':"The taxes collected over the revenue of fixed income assets in Brazil usually are regressive, meaning that the percentage of taxes charged decreases with time. Long term investments pays less taxes. The percentages by period of time are: until 6 months, 22.5%; From 7 to 12 months, 20%; From 13 to 24 months, 17.5%; Beyond 24 months, 15%",
+    'tax_rate_answ':""" ### Tax rate to be collected: """,
     'calculate_buttom':'Calculate',
     'results_title':"""
         # Results:
@@ -36,7 +37,7 @@ language_dictionary = {
         ### At the end, your final amount will be:
         """,
     'net_before_taxes_title':""" 
-        ### Which means that your total revenue is:
+        ### Which means that your total revenue before taxes is:
         """,
     'total_taxes_title':"""
         ### Then, you will have to pay the value below in the form of taxes
@@ -68,9 +69,10 @@ language_dictionary = {
     'interest_rate_body':""" ## Insira aqui a taxa mensal de juros (%) esperada deste investimento.""",
     'interest_rate_help':"Apenas valores positivos. Apenas números. Se sua taxa de juros esperada for de 10%, insira o número 10",
     'interest_rate_answ':'Taxa de juros inserida: ',
-    'tax_rate_body':""" ## O percentual de imposto é definido aqui de acordo com o número de meses que o investimento será mantido.""",
-    'tax_rate_help':"Até 6 meses, 22.5%; De 7 até 12 meses, 20%; De 13 até 24 meses, 17.5%; Acima de 24 meses, 15%",
-    'tax_rate_answ':"Percentual de imposto: ",
+    'tax_rate_body':""" ### O percentual de imposto é definido aqui de acordo com o número de meses que o investimento será mantido.""",
+    'tax_rate_help_title': "Para melhor entender o percentual de imposto, clique aqui",
+    'tax_rate_help':"Os percentuais do imposto cobrado sobre a renda de ativos de renda fixa no Brasil normalmente são regressivos, o que significa que o percentual das taxas cobradas se reduz com o tempo. Investimentos de longo prazo pagam menos imposto. Os percentuais por período de tempo são: até 6 meses, 22.5%; De 7 até 12 meses, 20%; De 13 até 24 meses, 17.5%; Acima de 24 meses, 15%",
+    'tax_rate_answ':""" ### Percentual de imposto a ser cobrado: """,
     'calculate_buttom':'Calcular',
     'results_title':"""
         # Resultados:
@@ -79,7 +81,7 @@ language_dictionary = {
         ### No final, seu valor total investido será:
         """,
     'net_before_taxes_title':""" 
-        ### O que significa que seu rendimento total será:
+        ### O que significa que seu rendimento total antes dos impostos será:
         """,
     'total_taxes_title':"""
         ### Então, você terá que pagar o valor abaixo sob a forma de impostos:
@@ -135,9 +137,7 @@ interest_rate = st.number_input(
 st.write(language_dictionary[language]['interest_rate_answ'], "{:,}".format(round(interest_rate, 2)),"%")
 
 "\n"
-"\n"
-"\n"
-language_dictionary[language]['tax_rate_body']
+
 if periods <=6:
 
     tax_rate = 0.225
@@ -153,7 +153,6 @@ elif (periods >12) & (periods <=24):
 else:
 
     tax_rate = 0.15
-st.write(language_dictionary[language]['tax_rate_answ'], "{:,}".format(round(tax_rate, 4)*100),'%')
 
 total_interest = (1 + (interest_rate / 100)) ** periods
 
@@ -185,6 +184,14 @@ if pressed:
 
     language_dictionary[language]['net_before_taxes_title']
     st.write(language_dictionary[language]['money'],net_before_taxes)
+
+    language_dictionary[language]['tax_rate_body']
+
+    with st.beta_expander(language_dictionary[language]['tax_rate_help_title']):
+
+        st.write(language_dictionary[language]['tax_rate_help'])
+
+    st.write(language_dictionary[language]['tax_rate_answ'], "{:,}".format(round(tax_rate, 4)*100),'%')
 
     language_dictionary[language]['total_taxes_title']
     st.write(language_dictionary[language]['money'],total_taxes)
