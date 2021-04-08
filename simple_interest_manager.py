@@ -65,7 +65,7 @@ language_dictionary = {
     'periods_body':""" ## Insira aqui o número de meses que você pretende manter o valor investido""",
     'periods_help':"Apenas valores positivos são permitidos",
     'periods_answ':'Total de meses inseridos: ',
-    'interest_rate_body':""" ## Insira aqui a taxa de juros (%) esperada deste investimento para cada período.""",
+    'interest_rate_body':""" ## Insira aqui a taxa mensal de juros (%) esperada deste investimento.""",
     'interest_rate_help':"Apenas valores positivos. Apenas números. Se sua taxa de juros esperada for de 10%, insira o número 10",
     'interest_rate_answ':'Taxa de juros inserida: ',
     'tax_rate_body':""" ## Insira aqui a taxa do imposto a ser cobrado sobre o rendimento do investimento""",
