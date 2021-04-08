@@ -25,9 +25,9 @@ language_dictionary = {
     'interest_rate_body':""" ## Insert here the monthly interest rate (%) expected from your investment.""",
     'interest_rate_help':"Only positive values. Only numbers. If your expected interest rate is 10%, enter the number 10",
     'interest_rate_answ':'Interest rate inserted: ',
-    'tax_rate_body':""" ## Insert here the tax rate expected to be collected from your investment's revenue""",
-    'tax_rate_help':"Only positive values allowed. Only numbers. If the expected tax rate is 20%, enter 20",
-    'tax_rate_answ':"Tax rate inserted: ",
+    'tax_rate_body':""" ## The tax rate is defined here accordingly to the number of periods the investment will be held.""",
+    'tax_rate_help':"Until 6 months, 22.5%; From 7 to 12 months, 20%; From 13 to 24 months, 17.5%; Beyond 24 months, 15%",
+    'tax_rate_answ':"Tax rate: ",
     'calculate_buttom':'Calculate',
     'results_title':"""
         # Results:
@@ -68,9 +68,9 @@ language_dictionary = {
     'interest_rate_body':""" ## Insira aqui a taxa mensal de juros (%) esperada deste investimento.""",
     'interest_rate_help':"Apenas valores positivos. Apenas números. Se sua taxa de juros esperada for de 10%, insira o número 10",
     'interest_rate_answ':'Taxa de juros inserida: ',
-    'tax_rate_body':""" ## Insira aqui a taxa do imposto a ser cobrado sobre o rendimento do investimento""",
-    'tax_rate_help':"Apenas valores positivos são permitidos. Se o percentual de imposto esperado for de 20%, insira 20",
-    'tax_rate_answ':"Taxa de imposto inserida: ",
+    'tax_rate_body':""" ## O percentual de imposto é definido aqui de acordo com o número de meses que o investimento será mantido.""",
+    'tax_rate_help':"Até 6 meses, 22.5%; De 7 até 12 meses, 20%; De 13 até 24 meses, 17.5%; Acima de 24 meses, 15%",
+    'tax_rate_answ':"Percentual de imposto: ",
     'calculate_buttom':'Calcular',
     'results_title':"""
         # Resultados:
@@ -138,13 +138,22 @@ st.write(language_dictionary[language]['interest_rate_answ'], "{:,}".format(roun
 "\n"
 "\n"
 language_dictionary[language]['tax_rate_body']
-tax_rate = st.number_input(
-    '',
-    min_value=0.0,
-    step=0.1,
-    help=language_dictionary[language]['tax_rate_help'],
-)
-st.write(language_dictionary[language]['tax_rate_answ'], "{:,}".format(round(tax_rate, 2)),'%')
+if periods <=6:
+
+    tax_rate = 0.225
+
+elif (periods >6) & (periods <=12):
+
+    tax_rate = 0.2
+
+elif (periods >12) & (periods <=24):
+
+    tax_rate = 0.175
+
+else:
+
+    tax_rate = 0.15
+st.write(language_dictionary[language]['tax_rate_answ'], "{:,}".format(round(tax_rate, 4)*100),'%')
 
 total_interest = (1 + (interest_rate / 100)) ** periods
 
@@ -152,7 +161,7 @@ final_amount = init_amount * total_interest
 
 net_before_taxes = final_amount - init_amount
 
-total_taxes = net_before_taxes * (tax_rate / 100)
+total_taxes = net_before_taxes * tax_rate
 
 net_after_taxes = net_before_taxes - total_taxes
 
