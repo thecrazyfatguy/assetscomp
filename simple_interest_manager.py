@@ -7,7 +7,7 @@ language_dictionary = {
         'sidebar_title': """
         ### Select your preferred language
         """,
-        'app_title': "Investment calculator",
+        'app_title': "Investment calculator: fixed income",
         'app_intro':"""
 
     Hello! This is a very simple investment calculator. 
