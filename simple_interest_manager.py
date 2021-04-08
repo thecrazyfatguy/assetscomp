@@ -55,7 +55,7 @@ language_dictionary = {
 
     Olá! Esta é uma calculadora de investimentos muito simples.
     Eu desenvolvi este app como uma forma de praticar minhas habilidades de software (do back-end ao front-end).
-    Aqui voce pode realizar simulações simples de um único investimento ao longo de um limitado número de períodos,
+    Aqui você pode realizar simulações simples de um único investimento ao longo de um limitado número de períodos,
     o valor deste investimento crescerá segundo uma taxa de juros fixa e impostos serão pagos sobre o rendimento recebido.
     Experimente!
     """,
@@ -100,15 +100,19 @@ st.sidebar.write(
 st.title(language_dictionary[language]['app_title'])
 st.write(language_dictionary[language]['app_intro'])
 
+"===================================================="
 language_dictionary[language]['init_amount_body']
 init_amount = st.number_input(
     '',
-    min_value=0.00,
-    step=0.01,
+    min_value=0,
+    step=100,
     help=language_dictionary[language]['init_amount_help'],
 )
 st.write(language_dictionary[language]['init_amount_answ'], "{:,}".format(round(init_amount, 2)))
 
+"\n"
+"\n"
+"\n"
 language_dictionary[language]['periods_body']
 periods = st.number_input(
     '',
@@ -118,6 +122,9 @@ periods = st.number_input(
 )
 st.write(language_dictionary[language]['periods_answ'], "{:,}".format(periods))
 
+"\n"
+"\n"
+"\n"
 language_dictionary[language]['interest_rate_body']
 interest_rate = st.number_input(
     '',
@@ -127,6 +134,9 @@ interest_rate = st.number_input(
 )
 st.write(language_dictionary[language]['interest_rate_answ'], "{:,}".format(round(interest_rate, 2)),"%")
 
+"\n"
+"\n"
+"\n"
 language_dictionary[language]['tax_rate_body']
 tax_rate = st.number_input(
     '',
@@ -151,6 +161,9 @@ net_before_taxes = round(net_before_taxes,2)
 total_taxes = round(total_taxes,2)
 net_after_taxes = round(net_after_taxes,2)
 
+"\n"
+"\n"
+"\n"
 left_column, right_column = st.beta_columns(2)
 pressed = left_column.button(language_dictionary[language]['calculate_buttom'])
 
