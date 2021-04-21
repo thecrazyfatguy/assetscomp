@@ -100,8 +100,9 @@ language_dictionary = {
 }
 
 # Selectbox for language choosing and selected language message
+container = st.sidebar.beta_container()
 language = st.sidebar.selectbox("", ["Português", "English"])
-st.sidebar.write(language_dictionary[language]["sidebar_title"])
+container.write(language_dictionary[language]["sidebar_title"])
 
 # Title and introduction for the app
 st.title(language_dictionary[language]["app_title"])
