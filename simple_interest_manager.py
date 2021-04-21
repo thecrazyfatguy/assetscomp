@@ -22,8 +22,8 @@ language_dictionary = {
         "periods_body": """ ## Insert here the number of months you intend to mantain your investment""",
         "periods_help": "Only positive values allowed",
         "periods_answ": "Number of months inserted: ",
-        "periodicity_radio_body": """ ## Insert here if your interest rate will be applied anually or monthly over your investment""",
-        "periodicity_anual_option": "Anually",
+        "periodicity_radio_body": """ ### Is the interest rate added monthly or annual?""",
+        "periodicity_anual_option": "Annual",
         "periodicity_month_option": "Monthly",
         "interest_rate_body": """ ## Insert here the interest rate (%) expected from your investment.""",
         "interest_rate_help": "Only positive values. Only numbers. If your expected interest rate is 10%, enter the number 10",
@@ -69,7 +69,7 @@ language_dictionary = {
         "periods_body": """ ## Insira aqui o número de meses que você pretende manter o valor investido""",
         "periods_help": "Apenas valores positivos são permitidos",
         "periods_answ": "Total de meses inseridos: ",
-        "periodicity_radio_body": """ ## Insira aqui se sua taxa de juros será aplicada anualmente ou mensalmente sobre seu investimento""",
+        "periodicity_radio_body": """ ### A taxa de juros inserida é anual ou mensal?""",
         "periodicity_anual_option": "Anualmente",
         "periodicity_month_option": "Mensalmente",
         "interest_rate_body": """ ## Insira aqui a taxa de juros (%) esperada deste investimento.""",
@@ -139,16 +139,6 @@ st.write(language_dictionary[language]["periods_answ"], "{:,}".format(periods))
 "\n"
 "\n"
 
-# Choosing if the interest rate will be calculated monthly or anually
-language_dictionary[language]["periodicity_radio_body"]
-st.radio(
-    '',
-    [
-        language_dictionary[language]["periodicity_anual_option"],
-        language_dictionary[language]["periodicity_month_option"],
-    ],
-)
-
 # Inserting the interest rate
 language_dictionary[language]["interest_rate_body"]
 interest_rate = st.number_input(
@@ -163,45 +153,15 @@ st.write(
     "%",
 )
 
-"\n"
-# Define tax rate based on the number of periods
-if periods <= 6:
-
-    tax_rate = 0.225
-
-elif (periods > 6) & (periods <= 12):
-
-    tax_rate = 0.2
-
-elif (periods > 12) & (periods <= 24):
-
-    tax_rate = 0.175
-
-else:
-
-    tax_rate = 0.15
-
-
-# Calculate the total interest
-total_interest = (1 + (interest_rate / 100)) ** periods
-
-# Calculate the final amount of money
-final_amount = init_amount * total_interest
-
-# Calculate the income achieved in the investment
-net_before_taxes = final_amount - init_amount
-
-# Calculate total taxes that will be paid over the investment
-total_taxes = net_before_taxes * tax_rate
-
-# Calculate the net (after taxes) income
-net_after_taxes = net_before_taxes - total_taxes
-
-# Rounds the resulting values
-final_amount = round(final_amount, 2)
-net_before_taxes = round(net_before_taxes, 2)
-total_taxes = round(total_taxes, 2)
-net_after_taxes = round(net_after_taxes, 2)
+# Choosing if the interest rate will be calculated monthly or anually
+language_dictionary[language]["periodicity_radio_body"]
+interest_choice = st.radio(
+    "",
+    [
+        language_dictionary[language]["periodicity_anual_option"],
+        language_dictionary[language]["periodicity_month_option"],
+    ],
+)
 
 "\n"
 "\n"
@@ -212,7 +172,52 @@ pressed = left_column.button(language_dictionary[language]["calculate_buttom"])
 
 
 if pressed:
-    
+    # Define tax rate based on the number of periods
+    if periods <= 6:
+
+        tax_rate = 0.225
+
+    elif (periods > 6) & (periods <= 12):
+
+        tax_rate = 0.2
+
+    elif (periods > 12) & (periods <= 24):
+
+        tax_rate = 0.175
+
+    else:
+
+        tax_rate = 0.15
+
+    # Transform the interest rate into index number
+    interest_rate = interest_rate / 100
+
+    # If the inserted interest rate is anual, transform it into monthly
+    if interest_choice == language_dictionary[language]["periodicity_anual_option"]:
+
+        interest_rate = ((interest_rate + 1) ** (1 / 12)) - 1
+
+    # Calculate the total interest
+    total_interest = (1 + interest_rate) ** periods
+
+    # Calculate the final amount of money
+    final_amount = init_amount * total_interest
+
+    # Calculate the income achieved in the investment
+    net_before_taxes = final_amount - init_amount
+
+    # Calculate total taxes that will be paid over the investment
+    total_taxes = net_before_taxes * tax_rate
+
+    # Calculate the net (after taxes) income
+    net_after_taxes = net_before_taxes - total_taxes
+
+    # Rounds the resulting values
+    final_amount = round(final_amount, 2)
+    net_before_taxes = round(net_before_taxes, 2)
+    total_taxes = round(total_taxes, 2)
+    net_after_taxes = round(net_after_taxes, 2)
+
     # Show results
     language_dictionary[language]["results_title"]
 
