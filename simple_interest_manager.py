@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 
-
+# Language dictionary to allow more than one language
 language_dictionary = {
     "English": {
         "sidebar_title": """
@@ -99,14 +99,17 @@ language_dictionary = {
     },
 }
 
+# Selectbox for language choosing and selected language message
 language = st.sidebar.selectbox("", ["Português", "English"])
 st.sidebar.write(language_dictionary[language]["sidebar_title"])
 
-
+# Title and introduction for the app
 st.title(language_dictionary[language]["app_title"])
 st.write(language_dictionary[language]["app_intro"])
 
 "===================================================="
+
+# Inserting the initial amount of investment
 language_dictionary[language]["init_amount_body"]
 init_amount = st.number_input(
     "",
@@ -122,6 +125,7 @@ st.write(
 "\n"
 "\n"
 "\n"
+# Inserting the number of periods the investment will take place
 language_dictionary[language]["periods_body"]
 periods = st.number_input(
     "",
@@ -135,6 +139,7 @@ st.write(language_dictionary[language]["periods_answ"], "{:,}".format(periods))
 "\n"
 "\n"
 
+# Choosing if the interest rate will be calculated monthly or anually
 language_dictionary[language]["periodicity_radio_body"]
 st.radio(
     '',
@@ -144,7 +149,7 @@ st.radio(
     ],
 )
 
-
+# Inserting the interest rate
 language_dictionary[language]["interest_rate_body"]
 interest_rate = st.number_input(
     "",
@@ -159,7 +164,7 @@ st.write(
 )
 
 "\n"
-
+# Define tax rate based on the number of periods
 if periods <= 6:
 
     tax_rate = 0.225
@@ -176,16 +181,23 @@ else:
 
     tax_rate = 0.15
 
+
+# Calculate the total interest
 total_interest = (1 + (interest_rate / 100)) ** periods
 
+# Calculate the final amount of money
 final_amount = init_amount * total_interest
 
+# Calculate the income achieved in the investment
 net_before_taxes = final_amount - init_amount
 
+# Calculate total taxes that will be paid over the investment
 total_taxes = net_before_taxes * tax_rate
 
+# Calculate the net (after taxes) income
 net_after_taxes = net_before_taxes - total_taxes
 
+# Rounds the resulting values
 final_amount = round(final_amount, 2)
 net_before_taxes = round(net_before_taxes, 2)
 total_taxes = round(total_taxes, 2)
@@ -194,11 +206,14 @@ net_after_taxes = round(net_after_taxes, 2)
 "\n"
 "\n"
 "\n"
+# Setup buttom to calculate
 left_column, right_column = st.beta_columns(2)
 pressed = left_column.button(language_dictionary[language]["calculate_buttom"])
 
-if pressed:
 
+if pressed:
+    
+    # Show results
     language_dictionary[language]["results_title"]
 
     language_dictionary[language]["final_amount_title"]
@@ -209,6 +224,7 @@ if pressed:
 
     language_dictionary[language]["tax_rate_body"]
 
+    # Informative about the tax rate
     with st.beta_expander(language_dictionary[language]["tax_rate_help_title"]):
 
         st.write(language_dictionary[language]["tax_rate_help"])
