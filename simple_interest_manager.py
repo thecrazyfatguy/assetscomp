@@ -219,30 +219,35 @@ if pressed:
     total_taxes = round(total_taxes, 2)
     net_after_taxes = round(net_after_taxes, 2)
 
-    # Show results
+    # Show results - title
     language_dictionary[language]["results_title"]
 
+    # Show results - final amount
     language_dictionary[language]["final_amount_title"]
     st.write(language_dictionary[language]["money"], final_amount)
 
+    # Show results - amount before taxes
     language_dictionary[language]["net_before_taxes_title"]
     st.write(language_dictionary[language]["money"], net_before_taxes)
 
+    # Informative about the tax rate
     language_dictionary[language]["tax_rate_body"]
 
-    # Informative about the tax rate
     with st.beta_expander(language_dictionary[language]["tax_rate_help_title"]):
 
         st.write(language_dictionary[language]["tax_rate_help"])
 
+    # Show results - tax rate
     st.write(
         language_dictionary[language]["tax_rate_answ"],
         "{:,}".format(round(tax_rate, 4) * 100),
         "%",
     )
 
+    # Show results - amount paid in taxes
     language_dictionary[language]["total_taxes_title"]
     st.write(language_dictionary[language]["money"], total_taxes)
 
+    # Show results - amount after taxes
     language_dictionary[language]["net_after_taxes_title"]
     st.write(language_dictionary[language]["money"], net_after_taxes)
