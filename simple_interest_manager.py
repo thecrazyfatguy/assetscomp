@@ -230,19 +230,19 @@ if pressed:
     language_dictionary[language]["net_before_taxes_title"]
     st.write(language_dictionary[language]["money"], net_before_taxes)
 
+    # Show results - tax rate
+    st.write(
+        language_dictionary[language]["tax_rate_answ"],
+        round(tax_rate, 4) * 100,
+        "%",
+    )
+
     # Informative about the tax rate
-    language_dictionary[language]["tax_rate_body"]
+    # language_dictionary[language]["tax_rate_body"]
 
     with st.beta_expander(language_dictionary[language]["tax_rate_help_title"]):
 
         st.write(language_dictionary[language]["tax_rate_help"])
-
-    # Show results - tax rate
-    st.write(
-        language_dictionary[language]["tax_rate_answ"],
-        "{:,}".format(round(tax_rate, 4) * 100),
-        "%",
-    )
 
     # Show results - amount paid in taxes
     language_dictionary[language]["total_taxes_title"]
