@@ -23,8 +23,8 @@ language_dictionary = {
         "periods_help": "Only positive values allowed",
         "periods_answ": "Number of months inserted: ",
         "deposits_body": """ ## Insert here the value of the monthly deposits - if there will be no monthly deposits, enter zero""",
-        "deposits_help": "Only positive values allowed",
-        "deposits_answ": "Monthly deposit inserted: ",
+        "deposits_help": "Only zero or positive values allowed",
+        "deposits_answ": "Monthly deposit inserted: US$ ",
         "periodicity_radio_body": """ ### Is the interest rate added monthly or annual?""",
         "periodicity_anual_option": "Annual",
         "periodicity_month_option": "Monthly",
@@ -73,8 +73,8 @@ language_dictionary = {
         "periods_help": "Apenas valores positivos são permitidos",
         "periods_answ": "Total de meses inseridos: ",
         "deposits_body": """ ## Insira aqui o valor do deposito mensal - se não houver depósito mensal, coloque zero""",
-        "deposits_help": "Apenas valores positivos são permitidos",
-        "deposits_answ": "Deposito mensal inserido: ",
+        "deposits_help": "Apenas zero ou valores positivos são permitidos",
+        "deposits_answ": "Deposito mensal inserido: R$ ",
         "periodicity_radio_body": """ ### A taxa de juros inserida é anual ou mensal?""",
         "periodicity_anual_option": "Anualmente",
         "periodicity_month_option": "Mensalmente",
@@ -148,13 +148,12 @@ st.write(language_dictionary[language]["periods_answ"], "{:,}".format(periods))
 
 # Inserting the value of monthly deposits
 language_dictionary[language]["deposits_body"]
-periods = st.number_input(
-    "",
-    min_value=0,
-    step=1,
-    help=language_dictionary[language]["deposits_help"],
-)
-st.write(language_dictionary[language]["deposits_answ"], "{:,}".format(periods))
+deposits = st.number_input('',
+min_value=0,
+step=50,
+help=language_dictionary[language]["deposits_help"])
+st.write(language_dictionary[language]["deposits_answ"], "{:,}".format(round(deposits, 2)))
+
 
 "\n"
 "\n"
@@ -217,11 +216,17 @@ if pressed:
 
         interest_rate = ((interest_rate + 1) ** (1 / 12)) - 1
 
-    # Calculate the total interest
+    # Calculate the total interest that will increase the initial amount
     total_interest = (1 + interest_rate) ** periods
 
-    # Calculate the final amount of money
-    final_amount = init_amount * total_interest
+    # Calculate the final amount of the initial investment
+    initial_investment_final_amount = init_amount * total_interest
+
+    # Calculate the final amount of the deposits
+    deposits_final_amount = deposits * (1 + interest_rate) * ((total_interest-1)/interest_rate)
+
+    # Calculate the final amount of the asset as a whole
+    final_amount = initial_investment_final_amount + deposits_final_amount
 
     # Calculate the income achieved in the investment
     net_before_taxes = final_amount - init_amount
