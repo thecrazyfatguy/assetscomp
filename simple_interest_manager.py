@@ -22,6 +22,9 @@ language_dictionary = {
         "periods_body": """ ## Insert here the number of months you intend to mantain your investment""",
         "periods_help": "Only positive values allowed",
         "periods_answ": "Number of months inserted: ",
+        "deposits_body": """ ## Insert here the value of the monthly deposits - if there will be no monthly deposits, enter zero""",
+        "deposits_help": "Only positive values allowed",
+        "deposits_answ": "Monthly deposit inserted: ",
         "periodicity_radio_body": """ ### Is the interest rate added monthly or annual?""",
         "periodicity_anual_option": "Annual",
         "periodicity_month_option": "Monthly",
@@ -54,7 +57,7 @@ language_dictionary = {
         "sidebar_title": """
         ### Selecione seu idioma preferido
         """,
-        "app_title": "Calculadora de investimentos",
+        "app_title": "Calculadora de investimentos: renda fixa",
         "app_intro": """
 
     Olá! Esta é uma calculadora de investimentos muito simples.
@@ -69,6 +72,9 @@ language_dictionary = {
         "periods_body": """ ## Insira aqui o número de meses que você pretende manter o valor investido""",
         "periods_help": "Apenas valores positivos são permitidos",
         "periods_answ": "Total de meses inseridos: ",
+        "deposits_body": """ ## Insira aqui o valor do deposito mensal - se não houver depósito mensal, coloque zero""",
+        "periods_help": "Only positive values allowed",
+        "periods_answ": "Monthly deposit inserted: ",
         "periodicity_radio_body": """ ### A taxa de juros inserida é anual ou mensal?""",
         "periodicity_anual_option": "Anualmente",
         "periodicity_month_option": "Mensalmente",
@@ -140,6 +146,19 @@ st.write(language_dictionary[language]["periods_answ"], "{:,}".format(periods))
 "\n"
 "\n"
 
+# Inserting the value of monthly deposits
+language_dictionary[language]["deposits_body"]
+periods = st.number_input(
+    "",
+    min_value=0,
+    step=1,
+    help=language_dictionary[language]["deposits_help"],
+)
+st.write(language_dictionary[language]["deposits_answ"], "{:,}".format(periods))
+
+"\n"
+"\n"
+"\n"
 # Inserting the interest rate
 language_dictionary[language]["interest_rate_body"]
 interest_rate = st.number_input(
