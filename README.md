@@ -1,10 +1,8 @@
-# assetscomp
+The objective of this app was to develop the creator skills in back-end and front-end.
+This app is has no intention to guide real life investment decisions and shouldnt be used to this purpose.
 
-Next steps:
-1 - Change the way taxes are calculated - ok
-2 - Give the user option to insert the anual or monthly taxes, keeping the periods as months - ok
-3 - Change the order that the language text and language box appears - ok
-4 - Change the structure of the entries so it is more friendly - ok
-5 - Add the possibility to make monthly deposits
-6 - Add graphical outputs
-7 - Add the option to insert two diferent interests, so the user can compare both
+The app is online through the streamlit package, hance, it was impossible to divide the code into different .py codes.
+
+All necessary packages are listed into the requirements.txt, so if you want to run this code locally (instead of using the already online version), you gotta run "python3 -m pip install -r requirements.txt" in your terminal window (while in the folder where the requirements.txt is contained).
+
+Have fun!
